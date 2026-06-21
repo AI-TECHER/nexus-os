@@ -1,0 +1,994 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-green: #00ff88;
+  --color-neon-blue: #00d4ff;
+  --color-neon-purple: #a855f7;
+  --color-neon-red: #ff3366;
+  --color-neon-yellow: #ffdd00;
+  --color-neon-orange: #ff8800;
+  --color-dark-bg: #0a0a0f;
+  --color-dark-card: #0d1117;
+  --color-dark-surface: #161b22;
+  --color-dark-border: #1e2a3a;
+  --color-glass: rgba(13, 17, 23, 0.7);
+  --color-glass-border: rgba(0, 255, 136, 0.15);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1e2a3a #0a0a0f;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+*::-webkit-scrollbar-thumb {
+  background: #1e2a3a;
+  border-radius: 3px;
+}
+
+body {
+  background: #0a0a0f;
+  color: #e0e0e0;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   GLASS CARD COMPONENTS
+   ============================================ */
+
+.glass-card {
+  background: rgba(13, 17, 23, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 136, 0.12);
+  border-radius: 12px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 255, 136, 0.25);
+}
+
+.glass-card-dark {
+  background: rgba(13, 17, 23, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 136, 0.08);
+  border-radius: 12px;
+}
+
+/* ============================================
+   NEON EFFECTS
+   ============================================ */
+
+.neon-glow {
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.1), 0 0 30px rgba(0, 255, 136, 0.05);
+}
+
+.neon-glow-green {
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15), 0 0 40px rgba(0, 255, 136, 0.05);
+}
+
+.neon-glow-red {
+  box-shadow: 0 0 20px rgba(255, 51, 102, 0.15), 0 0 40px rgba(255, 51, 102, 0.05);
+}
+
+.neon-glow-blue {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), 0 0 40px rgba(0, 212, 255, 0.05);
+}
+
+.neon-glow-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.15), 0 0 40px rgba(168, 85, 247, 0.05);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5), 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.neon-text-green {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4), 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.neon-text-red {
+  text-shadow: 0 0 10px rgba(255, 51, 102, 0.4), 0 0 20px rgba(255, 51, 102, 0.2);
+}
+
+.neon-text-blue {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4), 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.neon-border-animated {
+  position: relative;
+  overflow: hidden;
+}
+
+.neon-border-animated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #00ff88, #00d4ff, #a855f7, #00ff88);
+  background-size: 300% 300%;
+  animation: borderGlow 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes pulse-neon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes pulse-neon-strong {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.98); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+.animate-pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+.animate-pulse-neon-strong {
+  animation: pulse-neon-strong 1.5s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.05), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+.cyber-input {
+  background: rgba(13, 17, 23, 0.9);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #e0e0e0;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  outline: none;
+  width: 100%;
+}
+
+.cyber-input:focus {
+  border-color: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.15);
+}
+
+.cyber-input::placeholder {
+  color: #4a5568;
+}
+
+.cyber-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cyber-input-sm {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.cyber-input-lg {
+  padding: 12px 16px;
+  font-size: 15px;
+}
+
+textarea.cyber-input {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.cyber-button {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 212, 255, 0.15));
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #00ff88;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cyber-button:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 212, 255, 0.25));
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  transform: translateY(-1px);
+}
+
+.cyber-button:active {
+  transform: translateY(0);
+}
+
+.cyber-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.cyber-button-danger {
+  background: linear-gradient(135deg, rgba(255, 51, 102, 0.15), rgba(255, 51, 102, 0.1));
+  border-color: rgba(255, 51, 102, 0.3);
+  color: #ff3366;
+}
+
+.cyber-button-danger:hover {
+  background: linear-gradient(135deg, rgba(255, 51, 102, 0.25), rgba(255, 51, 102, 0.2));
+  box-shadow: 0 0 20px rgba(255, 51, 102, 0.2);
+}
+
+.cyber-button-primary {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.15));
+  border-color: rgba(0, 212, 255, 0.3);
+  color: #00d4ff;
+}
+
+.cyber-button-primary:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(168, 85, 247, 0.25));
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.cyber-button-success {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.1));
+  border-color: rgba(0, 255, 136, 0.3);
+  color: #00ff88;
+}
+
+.cyber-button-success:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 255, 136, 0.2));
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.cyber-select {
+  background: rgba(13, 17, 23, 0.9);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #e0e0e0;
+  font-size: 13px;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.cyber-select:focus {
+  border-color: #00ff88;
+}
+
+.cyber-select option {
+  background: #0d1117;
+  color: #e0e0e0;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background: rgba(30, 42, 58, 0.5);
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+  width: 100%;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #00ff88;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #00ff88;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+}
+
+input[type="checkbox"] {
+  accent-color: #00ff88;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ============================================
+   TYPOGRAPHY & UTILITY
+   ============================================ */
+
+.stat-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.text-currency-positive {
+  color: #00ff88;
+}
+
+.text-currency-negative {
+  color: #ff3366;
+}
+
+.text-currency-neutral {
+  color: #ffdd00;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  color: #8899aa;
+  border: 1px solid transparent;
+}
+
+.sidebar-item:hover {
+  background: rgba(0, 255, 136, 0.05);
+  color: #b0c4de;
+}
+
+.sidebar-item.active {
+  background: rgba(0, 255, 136, 0.1);
+  color: #00ff88;
+  border-color: rgba(0, 255, 136, 0.2);
+}
+
+.sidebar-item .icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.sidebar-item .badge {
+  background: rgba(255, 51, 102, 0.15);
+  color: #ff3366;
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+/* ============================================
+   HEATMAP
+   ============================================ */
+
+.heatmap-green { background: rgba(0, 255, 136, 0.3); color: #00ff88; }
+.heatmap-red { background: rgba(255, 51, 102, 0.3); color: #ff3366; }
+.heatmap-yellow { background: rgba(255, 221, 0, 0.3); color: #ffdd00; }
+.heatmap-blue { background: rgba(0, 212, 255, 0.3); color: #00d4ff; }
+.heatmap-neutral { background: rgba(30, 42, 58, 0.5); color: #4a5568; }
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+
+.progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(30, 42, 58, 0.5);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.progress-bar-sm {
+  height: 4px;
+}
+
+.progress-bar-lg {
+  height: 8px;
+}
+
+/* ============================================
+   WARNING / BANNERS
+   ============================================ */
+
+.warning-banner {
+  background: linear-gradient(135deg, rgba(255, 51, 102, 0.1), rgba(255, 136, 0, 0.1));
+  border: 1px solid rgba(255, 51, 102, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+.success-banner {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.info-banner {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+
+.tab-active {
+  background: rgba(0, 255, 136, 0.1);
+  color: #00ff88;
+  border-bottom: 2px solid #00ff88;
+}
+
+.tab-inactive {
+  color: #4a5568;
+  border-bottom: 2px solid transparent;
+}
+
+/* ============================================
+   RESPONSIVE TABLE
+   ============================================ */
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-container table {
+  min-width: 600px;
+  width: 100%;
+}
+
+/* ============================================
+   SPLASH SCREEN
+   ============================================ */
+
+.splash-grid {
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: splashGridMove 8s linear infinite;
+}
+
+@keyframes splashGridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, 40px); }
+}
+
+.splash-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 136, 0.015) 2px,
+    rgba(0, 255, 136, 0.015) 4px
+  );
+}
+
+.splash-scanlines::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 255, 136, 0.04) 0%,
+    transparent 100%
+  );
+  animation: splashScanSweep 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes splashScanSweep {
+  0% { top: -120px; }
+  100% { top: 100%; }
+}
+
+.splash-glitch-text {
+  position: relative;
+}
+
+.splash-glitch-text::before,
+.splash-glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.splash-glitch-text::before {
+  color: #00d4ff;
+  animation: splashGlitch1 3s infinite linear;
+  clip-path: inset(0 0 80% 0);
+}
+
+.splash-glitch-text::after {
+  color: #ff3366;
+  animation: splashGlitch2 3s infinite linear;
+  clip-path: inset(80% 0 0 0);
+}
+
+@keyframes splashGlitch1 {
+  0%, 89%, 91%, 93%, 95%, 100% { transform: translate(0); }
+  90% { transform: translate(-3px, 1px); }
+  92% { transform: translate(3px, -1px); }
+  94% { transform: translate(-1px, 2px); }
+}
+
+@keyframes splashGlitch2 {
+  0%, 89%, 91%, 93%, 95%, 100% { transform: translate(0); }
+  90% { transform: translate(3px, -2px); }
+  92% { transform: translate(-3px, 1px); }
+  94% { transform: translate(2px, -1px); }
+}
+
+/* ============================================
+   CURRENCY DISPLAY FIXES - ENHANCED
+   ============================================ */
+
+/* Ensure negative currency values display correctly 
+   Fixes: "$ -124,186.55" -> "-$124,186.55" */
+.currency-value {
+  font-variant-numeric: tabular-nums;
+  unicode-bidi: plaintext;
+}
+
+/* Force negative sign placement */
+.currency-negative {
+  unicode-bidi: plaintext;
+}
+
+/* For RTL currency display */
+.currency-rtl {
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+
+/* Currency value with proper negative sign placement */
+.currency-value.negative {
+  display: inline-block;
+}
+
+/* Fix for dollar sign with space before negative */
+.currency-fix {
+  white-space: nowrap;
+}
+
+/* Negative currency - ensure sign is before symbol */
+.currency-negative-sign::before {
+  content: '-';
+  margin-right: 0;
+}
+
+/* ============================================
+   MISC
+   ============================================ */
+
+/* Smooth scrolling */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Glass morphism overlay */
+.glass-overlay {
+  background: rgba(13, 17, 23, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* Divider */
+.divider {
+  border: none;
+  border-top: 1px solid rgba(30, 42, 58, 0.5);
+  margin: 12px 0;
+}
+
+.divider-light {
+  border-top: 1px solid rgba(30, 42, 58, 0.2);
+}
+
+/* Tag / Chip */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.tag-green {
+  background: rgba(0, 255, 136, 0.1);
+  color: #00ff88;
+}
+
+.tag-red {
+  background: rgba(255, 51, 102, 0.1);
+  color: #ff3366;
+}
+
+.tag-blue {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+}
+
+.tag-purple {
+  background: rgba(168, 85, 247, 0.1);
+  color: #a855f7;
+}
+
+.tag-yellow {
+  background: rgba(255, 221, 0, 0.1);
+  color: #ffdd00;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 12px;
+  }
+  
+  .cyber-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .cyber-input {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    padding: 10px;
+  }
+  
+  .sidebar-item {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+/* ============================================
+   TRADING ROADMAP ANIMATIONS
+   ============================================ */
+
+/* Slow spin animation for progress rings */
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Strong pulse neon for active elements */
+.animate-pulse-neon-strong {
+  animation: pulse-neon-strong 1.5s ease-in-out infinite;
+}
+
+/* Roadmap checkpoint hover glow */
+.checkpoint-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.checkpoint-glow:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+/* Active day breathing effect */
+@keyframes breathing {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+.animate-breathing {
+  animation: breathing 2s ease-in-out infinite;
+}
+
+/* Achievement badge sparkle */
+@keyframes sparkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; transform: scale(0.95); }
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Mission complete celebration */
+@keyframes celebration {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-celebration {
+  animation: celebration 0.6s ease-out forwards;
+}
+
+/* Radar scan pulse */
+@keyframes radar-pulse {
+  0% { transform: scale(0.95); opacity: 0.3; }
+  100% { transform: scale(1.05); opacity: 0; }
+}
+
+.animate-radar-pulse {
+  animation: radar-pulse 2s ease-out infinite;
+}
+
+/* Rule engine warning flash */
+@keyframes warning-flash {
+  0%, 100% { border-color: rgba(255, 51, 102, 0.3); }
+  50% { border-color: rgba(255, 51, 102, 0.8); }
+}
+
+.animate-warning-flash {
+  animation: warning-flash 1.5s ease-in-out infinite;
+}
+
+/* Success glow for completed days */
+@keyframes success-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.1); }
+  50% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.3); }
+}
+
+.animate-success-glow {
+  animation: success-glow 2s ease-in-out infinite;
+}
+
+/* Rotating progress ring for current day */
+@keyframes rotate-ring {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-rotate-ring {
+  animation: rotate-ring 4s linear infinite;
+}
+
+/* Particle float for background */
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(0px) translateX(10px); }
+  75% { transform: translateY(10px) translateX(5px); }
+}
+
+.animate-particle-float {
+  animation: particle-float 6s ease-in-out infinite;
+}
+
+/* Glitch text effect for roadmap titles */
+@keyframes glitch-text {
+  0%, 90%, 100% { transform: translate(0); }
+  91% { transform: translate(-2px, 1px); }
+  93% { transform: translate(2px, -1px); }
+  95% { transform: translate(-1px, 2px); }
+  97% { transform: translate(1px, -2px); }
+}
+
+.animate-glitch-text {
+  animation: glitch-text 3s infinite linear;
+}
+
+/* Pulsing ring for active day indicator */
+@keyframes pulsing-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.animate-pulsing-ring {
+  animation: pulsing-ring 2s ease-in-out infinite;
+}
+
+/* Scanline effect for current day */
+@keyframes scanline-effect {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.animate-scanline-effect {
+  animation: scanline-effect 3s linear infinite;
+}
+
+/* Achievement unlock flash */
+@keyframes unlock-flash {
+  0% { box-shadow: 0 0 0px rgba(255, 221, 0, 0); }
+  50% { box-shadow: 0 0 50px rgba(255, 221, 0, 0.6); }
+  100% { box-shadow: 0 0 0px rgba(255, 221, 0, 0); }
+}
+
+.animate-unlock-flash {
+  animation: unlock-flash 0.8s ease-out forwards;
+}
+
+/* Progress bar shimmer */
+@keyframes progress-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-progress-shimmer {
+  background: linear-gradient(90deg, 
+    rgba(0, 255, 136, 0.1) 0%, 
+    rgba(0, 255, 136, 0.3) 50%, 
+    rgba(0, 255, 136, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: progress-shimmer 2s ease-in-out infinite;
+}
+
+/* Status pulse for checkpoint cards */
+@keyframes status-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.animate-status-pulse {
+  animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+/* Mission complete fireworks sparkle */
+@keyframes fireworks-sparkle {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.animate-fireworks-sparkle {
+  animation: fireworks-sparkle 1.5s ease-out forwards;
+}
+
+/* Rule engine slide-in */
+@keyframes rule-slide-in {
+  0% { transform: translateX(-30px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.animate-rule-slide-in {
+  animation: rule-slide-in 0.5s ease-out forwards;
+}
+
+/* Achievement badge hover pop */
+@keyframes badge-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.animate-badge-pop {
+  animation: badge-pop 0.3s ease-out;
+}
+
+/* Day counter increment */
+@keyframes day-counter {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); color: #00ff88; }
+  100% { transform: scale(1); }
+}
+
+.animate-day-counter {
+  animation: day-counter 0.4s ease-out;
+}
+
+/* Mission progress bar fill animation */
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: var(--progress-width); }
+}
+
+.animate-progress-fill {
+  animation: progress-fill 1.5s ease-out forwards;
+}
+
+/* Success checkmark animation */
+@keyframes checkmark-pop {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  50% { transform: scale(1.3) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.animate-checkmark-pop {
+  animation: checkmark-pop 0.5s ease-out forwards;
+}
+
+/* Pulse ring for active trade indicator */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+/* Gradient shift for neon border */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
